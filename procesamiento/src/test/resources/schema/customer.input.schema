@@ -1,0 +1,73 @@
+{
+  "namespace": "FDEV",
+  "name": "t_fdev_step1",
+  "doc": "salida_step_1",
+  "database": "master",
+  "type": "record",
+  "fields": [
+  {
+    "name": "name",
+    "type": "string",
+    "legacyName": "name",
+    "logicalFormat": "ALPHANUMERIC(30)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+  {
+    "name": "country",
+    "type": ["null", "string"],
+    "legacyName": "country",
+    "logicalFormat": "ALPHANUMERIC(2)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+  {
+    "name": "bike_id",
+    "type": "string",
+    "legacyName": "bike_id",
+    "logicalFormat": "ALPHANUMERIC(2)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+  {
+    "name": "purchase_year",
+    "type": "int",
+    "legacyName": "purchase_year",
+    "logicalFormat": "ALPHANUMERIC(4)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+  {
+    "name": "purchase_city",
+    "type": ["null", "string"],
+    "legacyName": "purchase_city",
+    "logicalFormat": "ALPHANUMERIC(2)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+  {
+    "name": "purchase_continent",
+    "type": "string",
+    "legacyName": "purchase_continent",
+    "logicalFormat": "ALPHANUMERIC(15)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+  {
+    "name": "purchase_online",
+    "type": "boolean",
+    "legacyName": "purchase_online",
+    "logicalFormat": "ALPHANUMERIC(5)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  }
+
+  ]
+}

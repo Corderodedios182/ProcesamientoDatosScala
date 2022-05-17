@@ -1,0 +1,222 @@
+{
+  "namespace": "FDEV",
+  "name": "t_fdev_step2",
+  "doc": "salida_step_2",
+  "database": "master",
+  "type": "record",
+  "fields": [
+  {
+    "name": "bike_id",
+    "type": "string",
+    "legacyName": "bike_id",
+    "logicalFormat": "ALPHANUMERIC(2)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+
+  {
+    "name": "name",
+    "type": "string",
+    "legacyName": "name",
+    "logicalFormat": "ALPHANUMERIC(30)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+  {
+    "name": "country",
+    "type": ["null", "string"],
+    "legacyName": "country",
+    "logicalFormat": "ALPHANUMERIC(2)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+  {
+    "name": "purchase_year",
+    "type": "int",
+    "legacyName": "purchase_year",
+    "logicalFormat": "ALPHANUMERIC(4)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+  {
+    "name": "purchase_city",
+    "type": ["null", "string"],
+    "legacyName": "purchase_city",
+    "logicalFormat": "ALPHANUMERIC(2)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+  {
+    "name": "purchase_continent",
+    "type": "string",
+    "legacyName": "purchase_continent",
+    "logicalFormat": "ALPHANUMERIC(15)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+  {
+    "name": "purchase_online",
+    "type": "boolean",
+    "legacyName": "purchase_online",
+    "logicalFormat": "ALPHANUMERIC(5)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+
+  {
+    "name": "brand",
+    "type": "string",
+    "legacyName": "brand",
+    "logicalFormat": "ALPHANUMERIC(30)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+  {
+    "name": "type",
+    "type": "string",
+    "legacyName": "type",
+    "logicalFormat": "ALPHANUMERIC(2)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+  {
+    "name": "bike_name",
+    "type": "string",
+    "legacyName": "bike_name",
+    "logicalFormat": "ALPHANUMERIC(100)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+  {
+    "name": "wheel_size",
+    "type": "int",
+    "legacyName": "wheel_size",
+    "logicalFormat": "ALPHANUMERIC(100)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+  {
+    "name": "brakes",
+    "type": "string",
+    "legacyName": "brakes",
+    "logicalFormat": "ALPHANUMERIC(100)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+  {
+    "name": "size",
+    "type": "string",
+    "legacyName": "size",
+    "logicalFormat": "ALPHANUMERIC(100)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+  {
+    "name": "material",
+    "type": "string",
+    "legacyName": "material",
+    "logicalFormat": "ALPHANUMERIC(100)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+  {
+    "name": "price",
+    "type": "int",
+    "legacyName": "price",
+    "logicalFormat": "ALPHANUMERIC(100)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+
+  {
+    "name": "total_online",
+    "type": "int",
+    "legacyName": "total_online",
+    "logicalFormat": "ALPHANUMERIC(100)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+  {
+    "name": "total_inplace",
+    "type": "int",
+    "legacyName": "total_inplace",
+    "logicalFormat": "ALPHANUMERIC(100)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+  {
+    "name": "is_online_customer",
+    "type": "boolean",
+    "legacyName": "is_online_customer",
+    "logicalFormat": "ALPHANUMERIC(5)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+  {
+    "name": "is_inplace_customer",
+    "type": "boolean",
+    "legacyName": "is_inplace_customer",
+    "logicalFormat": "ALPHANUMERIC(5)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+  {
+    "name": "is_hybrid_customer",
+    "type": "boolean",
+    "legacyName": "is_hybrid_customer",
+    "logicalFormat": "ALPHANUMERIC(5)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+
+  {
+    "name": "total_spent",
+    "type": "int",
+    "legacyName": "total_spent",
+    "logicalFormat": "ALPHANUMERIC(2)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+  {
+    "name": "n_bikes",
+    "type": "int",
+    "legacyName": "n_bikes",
+    "logicalFormat": "ALPHANUMERIC(4)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  },
+
+  {
+    "name": "total_refund",
+    "type": "decimal(12,2)",
+    "legacyName": "total_refund",
+    "logicalFormat": "ALPHANUMERIC(5)",
+    "deleted": false,
+    "metadata": false,
+    "default": ""
+  }
+
+  ]
+}

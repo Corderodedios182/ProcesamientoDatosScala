@@ -2,5 +2,10 @@
 <project version="4">
   <component name="ScalaCompilerConfiguration">
     <profile name="Maven 1" modules="ProcesamientoDatosScala" />
+    <profile name="Maven 2" modules="procesamiento,testAT">
+      <plugins>
+        <plugin path="C:\Users\indra\.m2\repository\org\scalamacros\paradise_2.11.12\2.1.0\paradise_2.11.12-2.1.0.jar" />
+      </plugins>
+    </profile>
   </component>
 </project>
