@@ -5,6 +5,7 @@ import org.slf4j.{Logger, LoggerFactory}
 
 object Launcher extends App {
 
+
   private val logger = LoggerFactory.getLogger(this.getClass)
 
   if (args.length == 0) {
