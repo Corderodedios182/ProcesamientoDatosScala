@@ -2,39 +2,34 @@ package procesos
 
 import com.datio.dataproc.sdk.api.SparkProcess
 import com.datio.dataproc.sdk.api.context.RuntimeContext
-import com.datio.dataproc.sdk.schema.exception.DataprocSchemaException.InvalidDatasetException
 import com.typesafe.scalalogging.LazyLogging
 import com.typesafe.config.Config
+import org.slf4j.{Logger, LoggerFactory}
 import procesos.common.ConfigConstants
 
 import scala.util.{Failure, Success, Try}
 
 class Engine extends SparkProcess with LazyLogging {
 
-  //RuntimeContext : Contiene algunas cosas para la ejecución
+  //RuntimeContext : Contiene configuraciones para la ejecución.
   override def runProcess(runtimeContext: RuntimeContext): Int  = {
 
     Try {
 
       logger.info(s"Process Id : ${runtimeContext.getProcessId}") //Arroja el getProcessID : Engine
 
-      val config: Config = runtimeContext.getConfig
+      val config: Config = runtimeContext.getConfig //Extracción del getConfig del runtimeContext (variables del proyecto).
+      val devName: String = config.getString(ConfigConstants.DevName)
 
+      // variables HOCON para el proyecto
+      //procesamiento/src/test/resources/config/applicationLocal.conf , desarrollo en local se hace en test.
       logger.info(s"¿config es vacío? : ${config.isEmpty}" )
-      logger.info(s"Contenido de config : ${config.getString(ConfigConstants.DevName)}" )
+      logger.info(s"Contenido Dev Name en applicationLocal.conf : ${config.getString(ConfigConstants.DevName)}" )
+      logger.info(s"Bienvenido a procesamiento de Datos $devName")
 
     } match {
+      case Failure(e) => -1
       case Success(_) => 0
-      case Failure(exception: InvalidDatasetException) => {
-        for (err <- exception.getErrors.toArray) {
-          logger.error(err.toString)
-        }
-        100
-      }
-      case Failure(exception: Exception) => {
-        exception.printStackTrace()
-        100
-      }
     }
   }
 
