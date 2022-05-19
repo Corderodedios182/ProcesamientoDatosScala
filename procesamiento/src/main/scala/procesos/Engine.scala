@@ -8,6 +8,9 @@ import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.functions.{col, desc}
 import org.slf4j.{Logger, LoggerFactory}
 import procesos.common.ConfigConstants
+import procesos.common.Fields.BikesFields.SizeColumn
+import procesos.common.Fields.CustomerFields.{PurchaseCityColumn, PurchaseYearColumn}
+import procesos.common.StaticVals.{SizeS, TokioString}
 
 import scala.util.{Failure, Success, Try}
 
@@ -40,13 +43,13 @@ class Engine extends SparkProcess with IOUtils {
       bikesDf.printSchema()
       customerDf.printSchema()
 
-      val filterBikes: DataFrame = bikesDf.filter(col("size") =!= "S")
-      filterBikes.groupBy("size").count().show()
+      val filterBikes: DataFrame = bikesDf.filter(col(SizeColumn) =!= SizeS)
+      filterBikes.groupBy(SizeColumn).count().show()
 
-      val filterCustomers: DataFrame = customerDf.filter((col("purchase_city") =!= "Tokyo") && (col("purchase_year") > 2010))
-      filterCustomers.groupBy("purchase_year","purchase_city")
+      val filterCustomers: DataFrame = customerDf.filter((col(PurchaseCityColumn) =!= TokioString) && (col(PurchaseYearColumn) > 2010))
+      filterCustomers.groupBy(PurchaseYearColumn,PurchaseCityColumn)
         .count()
-        .sort("purchase_year")
+        .sort(PurchaseYearColumn)
         .show()
 
     } match {
