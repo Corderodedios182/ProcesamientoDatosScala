@@ -5,6 +5,7 @@ import com.datio.dataproc.sdk.api.SparkProcess
 import com.datio.dataproc.sdk.api.context.RuntimeContext
 import com.typesafe.config.Config
 import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.functions.{col, desc}
 import org.slf4j.{Logger, LoggerFactory}
 import procesos.common.ConfigConstants
 
@@ -31,13 +32,22 @@ class Engine extends SparkProcess with IOUtils {
       logger.info(s"Bienvenido a procesamiento de Datos $devName")
 
       val customerParquet: DataFrame = read(config.getConfig(ConfigConstants.CustomersParquet))
-      customerParquet.show(false)
-
       val bikesDf: DataFrame = read(config.getConfig(ConfigConstants.BikesInput))
-      bikesDf.show()
-
       val customerDf: DataFrame = read(config.getConfig(ConfigConstants.CustomersInput))
-      customerDf.show()
+
+      println("Transformaciones de datos : ")
+
+      bikesDf.printSchema()
+      customerDf.printSchema()
+
+      val filterBikes: DataFrame = bikesDf.filter(col("size") =!= "S")
+      filterBikes.groupBy("size").count().show()
+
+      val filterCustomers: DataFrame = customerDf.filter((col("purchase_city") =!= "Tokyo") && (col("purchase_year") > 2010))
+      filterCustomers.groupBy("purchase_year","purchase_city")
+        .count()
+        .sort("purchase_year")
+        .show()
 
     } match {
       case Failure(e) => -1
