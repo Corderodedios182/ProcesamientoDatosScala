@@ -5,13 +5,9 @@ import com.datio.dataproc.sdk.api.SparkProcess
 import com.datio.dataproc.sdk.api.context.RuntimeContext
 import com.typesafe.config.Config
 import org.apache.spark.sql.DataFrame
-import org.apache.spark.sql.functions.{col, desc}
 import org.slf4j.{Logger, LoggerFactory}
 import procesos.common.ConfigConstants
-import procesos.common.Fields.BikesFields.SizeColumn
-import procesos.common.Fields.CustomerFields.{PurchaseCityColumn, PurchaseYearColumn}
-import procesos.common.StaticVals.{SizeS, TokioString}
-
+import procesos.transormations.packages.{BikesDf, CustomerDf}
 import scala.util.{Failure, Success, Try}
 
 class Engine extends SparkProcess with IOUtils {
@@ -40,16 +36,14 @@ class Engine extends SparkProcess with IOUtils {
 
       println("Transformaciones de datos : ")
 
-      bikesDf.printSchema()
-      customerDf.printSchema()
+      bikesDf
+        .filterBikes
+        .groupbyBikes
+        .show()
 
-      val filterBikes: DataFrame = bikesDf.filter(col(SizeColumn) =!= SizeS)
-      filterBikes.groupBy(SizeColumn).count().show()
-
-      val filterCustomers: DataFrame = customerDf.filter((col(PurchaseCityColumn) =!= TokioString) && (col(PurchaseYearColumn) > 2010))
-      filterCustomers.groupBy(PurchaseYearColumn,PurchaseCityColumn)
-        .count()
-        .sort(PurchaseYearColumn)
+      customerDf
+        .filterCustomers
+        .groupbyYears
         .show()
 
     } match {
