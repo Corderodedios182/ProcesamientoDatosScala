@@ -1,15 +1,17 @@
 package procesos
 
+import com.bbva.datioamproduct.fdevdatio.utils.IOUtils
 import com.datio.dataproc.sdk.api.SparkProcess
 import com.datio.dataproc.sdk.api.context.RuntimeContext
-import com.typesafe.scalalogging.LazyLogging
 import com.typesafe.config.Config
 import org.slf4j.{Logger, LoggerFactory}
 import procesos.common.ConfigConstants
 
 import scala.util.{Failure, Success, Try}
 
-class Engine extends SparkProcess with LazyLogging {
+class Engine extends SparkProcess with IOUtils {
+
+  private val logger: Logger = LoggerFactory.getLogger(this.getClass)
 
   //RuntimeContext : Contiene configuraciones para la ejecución.
   override def runProcess(runtimeContext: RuntimeContext): Int  = {
