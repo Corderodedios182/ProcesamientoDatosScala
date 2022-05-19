@@ -9,5 +9,6 @@ object ConfigConstants {
   val DevName:String = s"$ParamsConfig.devName"
 
   val CustomersParquet:String = s"$InputConfig.fdevCustomersParquet"
+  val BikesInput:String = s"$InputConfig.fdevBikes"
 
 }

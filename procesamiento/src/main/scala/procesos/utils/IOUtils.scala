@@ -25,6 +25,7 @@ trait IOUtils {
         val schema: DatioSchema = DatioSchema.getBuilder.fromURI(URI.create(schemaPath)).build()
         val delimiter: String = inputConfig.getString("delimiter")
         val header: String = inputConfig.getString("header")
+
         datioSparkSession.read()
           .option("delimiter", delimiter)
           .option("header", header)

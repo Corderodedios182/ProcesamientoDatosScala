@@ -33,6 +33,12 @@ class Engine extends SparkProcess with IOUtils {
       val df: DataFrame = read(config.getConfig(ConfigConstants.CustomersParquet))
       df.show(false)
 
+      println("Conteo : ",df.count())
+
+      val bikes: DataFrame = read(config.getConfig(ConfigConstants.BikesInput))
+      println("bikes")
+      bikes.show()
+
     } match {
       case Failure(e) => -1
       case Success(_) => 0
