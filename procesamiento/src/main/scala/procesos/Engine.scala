@@ -4,6 +4,7 @@ import com.bbva.datioamproduct.fdevdatio.utils.IOUtils
 import com.datio.dataproc.sdk.api.SparkProcess
 import com.datio.dataproc.sdk.api.context.RuntimeContext
 import com.typesafe.config.Config
+import org.apache.spark.sql.DataFrame
 import org.slf4j.{Logger, LoggerFactory}
 import procesos.common.ConfigConstants
 
@@ -28,6 +29,9 @@ class Engine extends SparkProcess with IOUtils {
       logger.info(s"¿config es vacío? : ${config.isEmpty}" )
       logger.info(s"Contenido Dev Name en applicationLocal.conf : ${config.getString(ConfigConstants.DevName)}" )
       logger.info(s"Bienvenido a procesamiento de Datos $devName")
+
+      val df: DataFrame = read(config.getConfig(ConfigConstants.CustomersParquet))
+      df.show(false)
 
     } match {
       case Failure(e) => -1
