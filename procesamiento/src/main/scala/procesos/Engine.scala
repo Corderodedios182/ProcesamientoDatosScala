@@ -30,14 +30,14 @@ class Engine extends SparkProcess with IOUtils {
       logger.info(s"Contenido Dev Name en applicationLocal.conf : ${config.getString(ConfigConstants.DevName)}" )
       logger.info(s"Bienvenido a procesamiento de Datos $devName")
 
-      val df: DataFrame = read(config.getConfig(ConfigConstants.CustomersParquet))
-      df.show(false)
+      val customerParquet: DataFrame = read(config.getConfig(ConfigConstants.CustomersParquet))
+      customerParquet.show(false)
 
-      println("Conteo : ",df.count())
+      val bikesDf: DataFrame = read(config.getConfig(ConfigConstants.BikesInput))
+      bikesDf.show()
 
-      val bikes: DataFrame = read(config.getConfig(ConfigConstants.BikesInput))
-      println("bikes")
-      bikes.show()
+      val customerDf: DataFrame = read(config.getConfig(ConfigConstants.CustomersInput))
+      customerDf.show()
 
     } match {
       case Failure(e) => -1
