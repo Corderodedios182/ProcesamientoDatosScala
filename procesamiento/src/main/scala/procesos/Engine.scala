@@ -37,15 +37,11 @@ class Engine extends SparkProcess with IOUtils {
 
       println("Transformaciones de datos : ")
 
-      bikesDf
+      val bikesfilter: DataFrame = bikesDf
         .filterBikes
-        .groupbyBikes
-        .show()
 
-      customerDf
+      val customerFiltered: DataFrame =  customerDf
         .filterCustomers(currentYear)
-        .groupbyYears
-        .show()
 
     } match {
       case Failure(e) => -1

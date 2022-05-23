@@ -3,7 +3,7 @@ package procesos.transormations
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.functions.{col, lit}
 import org.apache.spark.sql.types.IntegerType
-import procesos.common.Fields.BikesFields.SizeColumn
+import procesos.common.Fields.BikesFields.{BikeId, SizeColumn}
 import procesos.common.Fields.CustomerFields.{PurchaseCityColumn, PurchaseYearColumn}
 import procesos.common.StaticVals.{SizeS, TokioString}
 
@@ -14,11 +14,11 @@ package object packages {
       df.
         filter(col(SizeColumn) =!= SizeS)
     }
-
     def groupbyBikes: DataFrame = {
       df.
         groupBy(SizeColumn).count()
     }
+    def getDf: DataFrame = df
 
   }
 
@@ -29,13 +29,20 @@ package object packages {
           (col(PurchaseCityColumn) =!= TokioString) &&
             lit(currentYear).cast(IntegerType) - col(PurchaseYearColumn).cast(IntegerType) <= 10)
     }
-
     def groupbyYears: DataFrame = {
       df
         .groupBy(PurchaseYearColumn,PurchaseCityColumn)
         .count()
         .sort(PurchaseYearColumn)
     }
+    def getDf: DataFrame = df
+  }
+
+  implicit class CustomersBikesDf(df: DataFrame) {
+    def joinCustomersBikes(bikesDf: BikesDf): CustomersBikesDf = {
+      df.join(bikesDf.getDf, Seq(BikeId))
+    }
+    def getDf: DataFrame = df
 
   }
 

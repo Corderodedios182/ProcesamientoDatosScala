@@ -3,6 +3,7 @@ package procesos.common
 object Fields {
 
   case object BikesFields {
+    val BikeId: String = "bike_id"
     val SizeColumn: String = "size"
   }
 
