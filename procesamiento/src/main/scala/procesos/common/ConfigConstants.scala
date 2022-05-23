@@ -7,6 +7,7 @@ object ConfigConstants {
   val InputConfig: String = s"$RootConfig.input"
 
   val DevName:String = s"$ParamsConfig.devName"
+  val currentYear: String = s"$ParamsConfig.currentYear"
 
   val CustomersParquet:String = s"$InputConfig.fdevCustomersParquet"
 

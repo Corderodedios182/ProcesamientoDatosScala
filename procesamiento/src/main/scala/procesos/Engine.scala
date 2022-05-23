@@ -23,6 +23,7 @@ class Engine extends SparkProcess with IOUtils {
 
       val config: Config = runtimeContext.getConfig //Extracción del getConfig del runtimeContext (variables del proyecto).
       val devName: String = config.getString(ConfigConstants.DevName)
+      val currentYear: String = config.getString(ConfigConstants.currentYear)
 
       // variables HOCON para el proyecto
       //procesamiento/src/test/resources/config/applicationLocal.conf , desarrollo en local se hace en test.
@@ -42,7 +43,7 @@ class Engine extends SparkProcess with IOUtils {
         .show()
 
       customerDf
-        .filterCustomers
+        .filterCustomers(currentYear)
         .groupbyYears
         .show()
 
