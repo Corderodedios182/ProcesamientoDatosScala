@@ -48,9 +48,10 @@ class Engine extends SparkProcess with IOUtils {
         .joinCustomersBikes(bikesFiltered)
         .appendColumn(NBikes.apply)
         .appendColumn(TotalSpend.apply)
+        .appendCheapColumn
+        .appendCheapUDF
         .getDf
         .show(truncate = false)
-
 
     } match {
       case Failure(e) => -1
