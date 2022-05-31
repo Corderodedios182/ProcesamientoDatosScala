@@ -3,13 +3,13 @@ package procesos
 import com.typesafe.config.Config
 import org.apache.spark.sql.DataFrame
 import org.slf4j.{Logger, LoggerFactory}
-import scala.util.{Failure, Success, Try}
 
+import scala.util.{Failure, Success, Try}
 import com.bbva.datioamproduct.fdevdatio.utils.IOUtils
 import com.datio.dataproc.sdk.api.SparkProcess
 import com.datio.dataproc.sdk.api.context.RuntimeContext
-
-import procesos.common.ConfigConstants.{BikesInput, CurrentYear, CustomersInput, CustomersParquet, DevName}
+import procesos.common.ConfigConstants.{BikesInput, CurrentYear, CustomersInput, DevName}
+import procesos.common.output.CustomersBikes.{NBikes, TotalSpend}
 import procesos.transormations.transformations.{BikesDf, CustomerDf, CustomersBikesDf}
 
 class Engine extends SparkProcess with IOUtils {
@@ -33,20 +33,24 @@ class Engine extends SparkProcess with IOUtils {
       logger.info(s"Contenido Dev Name en applicationLocal.conf : ${config.getString(DevName)}" )
       logger.info(s"Bienvenido a procesamiento de Datos $devName")
 
-      val customerParquet: DataFrame = read(config.getConfig(CustomersParquet))
+      //val customerParquet: DataFrame = read(config.getConfig(CustomersParquet))
       val bikesDf: DataFrame = read(config.getConfig(BikesInput))
       val customerDf: DataFrame = read(config.getConfig(CustomersInput))
 
       println("Transformaciones de datos : ")
 
-      val bikesfilter: DataFrame = bikesDf
-        .filterBikes
+      val bikesFiltered = bikesDf.filterBikes
 
-      val customerFiltered: DataFrame =  customerDf
-        .filterCustomers(currentYear)
+      val customerFiltered = customerDf.filterCustomers(currentYear)
 
       customerFiltered
-        .show()
+        .getDf
+        .joinCustomersBikes(bikesFiltered)
+        .appendColumn(NBikes.apply)
+        .appendColumn(TotalSpend.apply)
+        .getDf
+        .show(truncate = false)
+
 
     } match {
       case Failure(e) => -1
