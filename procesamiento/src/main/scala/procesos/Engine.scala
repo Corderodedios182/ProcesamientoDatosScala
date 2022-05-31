@@ -9,7 +9,7 @@ import com.bbva.datioamproduct.fdevdatio.utils.IOUtils
 import com.datio.dataproc.sdk.api.SparkProcess
 import com.datio.dataproc.sdk.api.context.RuntimeContext
 import procesos.common.ConfigConstants.{BikesInput, CurrentYear, CustomersInput, DevName}
-import procesos.common.output.CustomersBikes.{NBikes, TotalSpend}
+import procesos.common.output.CustomersBikes.{NBikes, TotalOnline, TotalSpend}
 import procesos.transormations.transformations.{BikesDf, CustomerDf, CustomersBikesDf}
 
 class Engine extends SparkProcess with IOUtils {
@@ -48,6 +48,7 @@ class Engine extends SparkProcess with IOUtils {
         .joinCustomersBikes(bikesFiltered)
         .appendColumn(NBikes.apply)
         .appendColumn(TotalSpend.apply)
+        .appendColumn(TotalOnline.apply)
         .appendCheapColumn
         .appendCheapUDF
         .getDf
