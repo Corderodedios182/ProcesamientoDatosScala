@@ -1,14 +1,16 @@
 package procesos
 
-import com.bbva.datioamproduct.fdevdatio.utils.IOUtils
-import com.datio.dataproc.sdk.api.SparkProcess
-import com.datio.dataproc.sdk.api.context.RuntimeContext
 import com.typesafe.config.Config
 import org.apache.spark.sql.DataFrame
 import org.slf4j.{Logger, LoggerFactory}
-import procesos.common.ConfigConstants
-import procesos.transormations.packages.{BikesDf, CustomerDf}
 import scala.util.{Failure, Success, Try}
+
+import com.bbva.datioamproduct.fdevdatio.utils.IOUtils
+import com.datio.dataproc.sdk.api.SparkProcess
+import com.datio.dataproc.sdk.api.context.RuntimeContext
+
+import procesos.common.ConfigConstants.{BikesInput, CurrentYear, CustomersInput, CustomersParquet, DevName}
+import procesos.transormations.transformations.{BikesDf, CustomerDf, CustomersBikesDf}
 
 class Engine extends SparkProcess with IOUtils {
 
@@ -22,18 +24,18 @@ class Engine extends SparkProcess with IOUtils {
       logger.info(s"Process Id : ${runtimeContext.getProcessId}") //Arroja el getProcessID : Engine
 
       val config: Config = runtimeContext.getConfig //Extracción del getConfig del runtimeContext (variables del proyecto).
-      val devName: String = config.getString(ConfigConstants.DevName)
-      val currentYear: String = config.getString(ConfigConstants.currentYear)
+      val devName: String = config.getString(DevName)
+      val currentYear: String = config.getString(CurrentYear)
 
-      // variables HOCON para el proyecto
+      // variables HOCON para el proyectoConfigConstants.
       //procesamiento/src/test/resources/config/applicationLocal.conf , desarrollo en local se hace en test.
       logger.info(s"¿config es vacío? : ${config.isEmpty}" )
-      logger.info(s"Contenido Dev Name en applicationLocal.conf : ${config.getString(ConfigConstants.DevName)}" )
+      logger.info(s"Contenido Dev Name en applicationLocal.conf : ${config.getString(DevName)}" )
       logger.info(s"Bienvenido a procesamiento de Datos $devName")
 
-      val customerParquet: DataFrame = read(config.getConfig(ConfigConstants.CustomersParquet))
-      val bikesDf: DataFrame = read(config.getConfig(ConfigConstants.BikesInput))
-      val customerDf: DataFrame = read(config.getConfig(ConfigConstants.CustomersInput))
+      val customerParquet: DataFrame = read(config.getConfig(CustomersParquet))
+      val bikesDf: DataFrame = read(config.getConfig(BikesInput))
+      val customerDf: DataFrame = read(config.getConfig(CustomersInput))
 
       println("Transformaciones de datos : ")
 
@@ -42,6 +44,9 @@ class Engine extends SparkProcess with IOUtils {
 
       val customerFiltered: DataFrame =  customerDf
         .filterCustomers(currentYear)
+
+      customerFiltered
+        .show()
 
     } match {
       case Failure(e) => -1
